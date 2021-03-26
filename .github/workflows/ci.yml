@@ -48,7 +48,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           
           script: |
-            swap
+            cd ~/scripts
+            ./maintenance.sh
 
       - name: ZIP Assets
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
