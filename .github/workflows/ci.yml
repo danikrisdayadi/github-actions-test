@@ -12,7 +12,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
       - name: Use NodeJS
         uses: actions/setup-node@v1
         with:
@@ -26,3 +25,4 @@ jobs:
         if:
           github.event_name == 'push'
         run: npm run build
+          CI: true # so that coverage is not interactive
