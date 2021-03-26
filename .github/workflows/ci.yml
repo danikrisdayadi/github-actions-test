@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [dev, main]
   push:
-    branches: [dev, main]
+    branches: [dev, main, workflow]
 
 jobs:
   build:
@@ -40,6 +40,18 @@ jobs:
           name: build
           path: build
       
+      - name: Deploy on DigitalOcean
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          
+          script: |
+            mkdir test
+            cd test
+            touch lmao.txt
+
       - name: ZIP Assets
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
