@@ -22,12 +22,5 @@ jobs:
           CI: true # so that coverage is not interactive
       
       - name: Build Project
-<<<<<<< HEAD
         if: github.event_name == 'push'
         run: npm run build
-=======
-        if:
-          github.event_name == 'push'
-        run: npm run build
-          CI: true # so that coverage is not interactive
->>>>>>> eb1f44e75b4f6c53f9a36c943b338ca1d34e5228
