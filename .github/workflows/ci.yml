@@ -79,8 +79,9 @@ jobs:
           message: |
             **ERROR Message**
             The ${{ github.event_name }} to ${{ github.base_ref }} from ${{ github.head_ref }} has failed
-            Workflow: ${{ github.workflow }}
-            Job ID: ${{ github.job }}
+            
+            Workflow Title: ${{ github.workflow }}
+            Run ID: ${{ github.run_id }}
             Repository: ${{ github.repository }}
             Job Status: ${{ job.status }}
       
@@ -90,13 +91,12 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          bold: 
-            - book
           message: |
-            ERROR Message
+            **ERROR Message**
             The ${{ github.event_name }} to ${{ github.ref }} has failed
-            Workflow: ${{ github.workflow }}
-            Job ID: ${{ github.job }}
+
+            Workflow Title: ${{ github.workflow }}
+            Run ID: ${{ github.run_number }}
             Repository: ${{ github.repository }}
             Job Status: ${{ job.status }}
         
