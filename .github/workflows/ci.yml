@@ -71,17 +71,32 @@ jobs:
             }'
       
       - name: Send Error Message
-        if: failure()
+        if: failure() && github.event_name == 'pull_request'
         uses: appleboy/telegram-action@v0.1.0
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            **ERROR Message**
-            The ${{ github.event_name }} to ${{ github.head_ref }} has failed
+            {{safeHTML "<a>ERROR</a> message"}}
+            The ${{ github.event_name }} to ${{ github.base_ref }} from ${{ github.head_ref }} has failed
             Workflow: ${{ github.workflow }}
             Job ID: ${{ github.job }}
-            Repository: ${{ github.repository }} owned by ${{ github.repository_owner }}
+            Repository: ${{ github.repository }}
+            Job Status: ${{ job.status }}
+      
+      - name: Send Error Message
+        if: failure() && github.event_name == 'push'
+        uses: appleboy/telegram-action@v0.1.0
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          bold: "ERROR Message"
+          message: |
+            **ERROR Message**
+            The ${{ github.event_name }} to ${{ github.ref }} has failed
+            Workflow: ${{ github.workflow }}
+            Job ID: ${{ github.job }}
+            Repository: ${{ github.repository }}
             Job Status: ${{ job.status }}
         
       - name: Successful Message
@@ -94,5 +109,5 @@ jobs:
             Your ${{ github.event_name }} to ${{ github.head_ref }} has been successfully made
             Workflow: ${{ github.workflow }}
             Job ID: ${{ github.job }}
-            Repository: ${{ github.repository }} owned by ${{ github.repository_owner }}
+            Repository: ${{ github.repository }}
             Job Status: ${{ job.status }}
