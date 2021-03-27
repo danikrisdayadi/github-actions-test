@@ -77,7 +77,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            {{safeHTML "<a>ERROR</a> message"}}
+            **ERROR Message**
             The ${{ github.event_name }} to ${{ github.base_ref }} from ${{ github.head_ref }} has failed
             Workflow: ${{ github.workflow }}
             Job ID: ${{ github.job }}
@@ -92,7 +92,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           bold: "ERROR Message"
           message: |
-            **ERROR Message**
+            ERROR Message
             The ${{ github.event_name }} to ${{ github.ref }} has failed
             Workflow: ${{ github.workflow }}
             Job ID: ${{ github.job }}
