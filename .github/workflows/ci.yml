@@ -90,7 +90,8 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          bold: "ERROR Message"
+          bold: 
+            - book
           message: |
             ERROR Message
             The ${{ github.event_name }} to ${{ github.ref }} has failed
