@@ -69,3 +69,30 @@ jobs:
             "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_.",
             "assignees": ["${{ github.event.pull_request.user.login }}"]
             }'
+      
+      - name: Send Error Message
+        if: failure()
+        uses: appleboy/telegram-action@v0.1.0
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            **ERROR Message**
+            The ${{ github.event_name }} to ${{ github.head_ref }} has failed
+            Workflow: ${{ github.workflow }}
+            Job ID: ${{ github.job }}
+            Repository: ${{ github.repository }} owned by ${{ github.repository_owner }}
+            Job Status: ${{ job.status }}
+        
+      - name: Successful Message
+        uses: appleboy/telegram-action@v0.1.0
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            **Notification Message**
+            Your ${{ github.event_name }} to ${{ github.head_ref }} has been successfully made
+            Workflow: ${{ github.workflow }}
+            Job ID: ${{ github.job }}
+            Repository: ${{ github.repository }} owned by ${{ github.repository_owner }}
+            Job Status: ${{ job.status }}

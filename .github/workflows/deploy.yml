@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Continuous Deployment
 
 on:
   push:
@@ -21,30 +21,25 @@ jobs:
         env:
           CI: true
 
-      - name: Swap on DigitalOcean
-        if: failure()
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          key: ${{ secrets.SSH_KEY }}
-          username: ${{ secrets.SSH_USERNAME }}
-          script: |
-            cd ~/scripts
-            ./maintenance.sh
+      # - name: Swap on DigitalOcean
+      #   if: failure()
+      #   uses: appleboy/ssh-action@v0.1.4
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     username: ${{ secrets.SSH_USERNAME }}
+      #     script: |
+      #       cd ~/scripts
+      #       ./maintenance.sh
 
-      - name: Deploy on DigitalOcean
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          key: ${{ secrets.SSH_KEY }}
-          username: ${{ secrets.SSH_USERNAME }}
-          script: |
-            cd ~/scripts
-            ./stage.sh
+      # - name: Deploy on DigitalOcean
+      #   uses: appleboy/ssh-action@v0.1.4
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     username: ${{ secrets.SSH_USERNAME }}
+      #     script: |
+      #       cd ~/scripts
+      #       ./stage.sh
 
-      - name: Notify Telegram
-        uses: appleboy/telegram-action@v0.1.0
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: The ${{ github.event_name }} event triggered first step.
+      
