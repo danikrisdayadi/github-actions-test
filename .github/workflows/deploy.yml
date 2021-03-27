@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Continuous Deployment
 
 on:
   push:
@@ -15,29 +15,31 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
-          
+
       - run: npm ci
       - run: npm test -- --coverage
         env:
           CI: true
 
-      - name: Swap on DigitalOcean
-        if: failure()
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          key: ${{ secrets.SSH_KEY }}
-          username: ${{ secrets.SSH_USERNAME }}
-          script: |
-            cd ~/scripts
-            ./maintenance.sh
+      # - name: Swap on DigitalOcean
+      #   if: failure()
+      #   uses: appleboy/ssh-action@v0.1.4
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     username: ${{ secrets.SSH_USERNAME }}
+      #     script: |
+      #       cd ~/scripts
+      #       ./maintenance.sh
 
-      - name: Deploy on DigitalOcean
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          key: ${{ secrets.SSH_KEY }}
-          username: ${{ secrets.SSH_USERNAME }}
-          script: |
-            cd ~/scripts
-            ./stage.sh
+      # - name: Deploy on DigitalOcean
+      #   uses: appleboy/ssh-action@v0.1.4
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     username: ${{ secrets.SSH_USERNAME }}
+      #     script: |
+      #       cd ~/scripts
+      #       ./stage.sh
+
+      

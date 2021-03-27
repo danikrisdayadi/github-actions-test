@@ -69,3 +69,51 @@ jobs:
             "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_.",
             "assignees": ["${{ github.event.pull_request.user.login }}"]
             }'
+      
+      - name: Send PR Error Message
+        if: failure() && github.event_name == 'pull_request'
+        uses: appleboy/telegram-action@v0.1.0
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            **ERROR Message**
+            The ${{ github.event_name }} to ${{ github.base_ref }} from ${{ github.head_ref }} has failed
+
+            Workflow Title: ${{ github.workflow }}
+            Run Number: ${{ github.run_number }}
+            Run ID: ${{ github.run_id }}
+            Repository: ${{ github.repository }}
+            Job Status: ${{ job.status }}
+      
+      - name: Send Push Error Message
+        if: failure() && github.event_name == 'push'
+        uses: appleboy/telegram-action@v0.1.0
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            **ERROR Message**
+            The ${{ github.event_name }} to ${{ github.ref }} has failed
+
+            Workflow Title: ${{ github.workflow }}
+            Run Number: ${{ github.run_number }}
+            Run ID: ${{ github.run_id }}
+            Repository: ${{ github.repository }}
+            Job Status: ${{ job.status }}
+      
+      - name: Successful Push Message
+        if: github.event_name == 'push'
+        uses: appleboy/telegram-action@v0.1.0
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            **Successful Message**
+            Your ${{ github.event_name }} to ${{ github.ref }} has been successfully made
+
+            Workflow Title: ${{ github.workflow }}
+            Run Number: ${{ github.run_number }}
+            Run ID: ${{ github.run_id }}
+            Repository: ${{ github.repository }}
+            Job Status: ${{ job.status }}
