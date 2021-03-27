@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
-          
+
       - run: npm ci
       - run: npm test -- --coverage
         env:
@@ -41,3 +41,10 @@ jobs:
           script: |
             cd ~/scripts
             ./stage.sh
+
+      - name: Notify Telegram
+        uses: appleboy/telegram-action@v0.1.0
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: The ${{ github.event_name }} event triggered first step.
