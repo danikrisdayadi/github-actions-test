@@ -109,7 +109,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            **Notification Message**
+            **Successful Message**
             Your ${{ github.event_name }} to ${{ github.ref }} has been successfully made
 
             Workflow Title: ${{ github.workflow }}
